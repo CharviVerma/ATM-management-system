@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SE PROJECT</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>ATM MANAGEMENT SYSTEM</h1>
+        <form id="details-form">
+            <input type="text" name="" id="FullName" autocomplete="off" placeholder="FullName" /><br>
+            <input type="tel" name="" id="PhoneNumber" autocomplete="off" placeholder="PhoneNumber" /><br>
+            <input type="text" name="" id="Address" placeholder="Address" /><br>
+            <input type="text" name="" id="CardNumber" placeholder="CardNumber" /><br> 
+            <input type="password" name="" id="Pin" placeholder="Pin" /><br>
+            Male:
+            <input type="radio" name="yesorno" id="Gender" placeholder="Gender" />
+            Female:
+            <input type="radio" name="yesorno" id="Gender" placeholder="Gender" /><br>
+            <input type="submit" name="" id="" value="Submit Form" />
+        </form>
+
+        <script>
+            const form = document.getElementById('details-form')
+            form.addEventListener('submit', getDetails)
+
+            async function getDetails(event) {
+                event.preventDefault()
+                const FullName = document.getElementById('FullName')
+                const PhoneNumber = document.getElementById('PhoneNumber')
+                const Address = document.getElementById('Address')
+                const CardNumber = document.getElementById('CardNumber')
+                const Pin = document.getElementById('pin')
+
+                const result = await fetch('/api/details', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify({
+                        FullName,
+                        PhoneNumber,
+                        Address,
+                        CardNumber,
+                        Pin
+                    })
+                }).then((res) => res.json())
+
+                if (result.status === 'ok') {
+					alert('Success')
+				} else {
+					alert(result.error)
+				}
+            }
+        </script>
+    </body>
+</html>
